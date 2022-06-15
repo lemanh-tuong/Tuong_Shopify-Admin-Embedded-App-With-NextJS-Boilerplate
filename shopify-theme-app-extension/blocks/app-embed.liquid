@@ -1,0 +1,30 @@
+<div is="APP_NAME"></div>
+<script id="JS_APP_NAME">
+  const jsFile = !!document.querySelector('script[src*="APP_NAME.js"]');
+  const cssFile = !!document.querySelector('script[src*="APP_NAME.css"]');
+  console.log("Magic badges's initing", jsFile, cssFile);
+  if(!jsFile) {
+    console.log('Magic badges - JS loaded');
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'APP_NAME.netlify.js';
+    document.body.appendChild(script);
+  }
+  if(!cssFile) {
+    console.log('Magic badges - CSS loaded');
+    const $linkEl = document.createElement('link');
+    $linkEl.rel = 'stylesheet';
+    $linkEl.href = 'APP_NAME.netlify.css';
+    document.body.appendChild($linkEl);
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Magic Badges",
+  "target": "body",
+  "javascript": "APP_NAME.js",
+  "stylesheet": "APP_NAME.css",
+  "settings": []
+}
+{% endschema %}

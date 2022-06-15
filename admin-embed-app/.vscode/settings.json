@@ -1,0 +1,21 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "node_modules": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll": true
+  },
+  "scss.scannerExclude": [
+    "**/.git"
+  ],
+  "[shellscript]": {
+    "files.eol": "\n",
+  },
+  "files.eol": "\n",
+}

@@ -1,0 +1,11 @@
+*/node_modules
+*/.next
+*/dist
+*/.env
+*/yarn.lock
+*/.DS_Store
+*/yarn.lock
+*/package-lock.json
+*/.env
+*/*/.env
+.DS_Store
