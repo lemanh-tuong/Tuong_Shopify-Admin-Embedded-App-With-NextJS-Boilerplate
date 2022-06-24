@@ -1,4 +1,11 @@
 <div is="APP_NAME"></div>
+
+{% comment %}
+Do có shop không chèn file "APP_NAME.js", "APP_NAME.css" nên phải viết file app-embed.liquid như kia 
+- shop không được chèn js: https://valout.net/
+- shop không được chèn css: https://mvmntlmtd.com 
+{% endcomment %}
+
 <script id="JS_APP_NAME">
   const jsFile = !!document.querySelector('script[src*="APP_NAME.js"]');
   const cssFile = !!document.querySelector('script[src*="APP_NAME.css"]');
