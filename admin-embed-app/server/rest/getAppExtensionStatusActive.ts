@@ -18,7 +18,7 @@ interface GetSettingsData {
 }
 interface Block {
   type: string;
-  disabled: true;
+  disabled: boolean;
   settings: Record<string, any>;
 }
 type Blocks = undefined | null | Record<string, Block>;
@@ -45,9 +45,10 @@ export const getAppExtensionStatusActive = async ({ myshopifyDomain, accessToken
     const json_parse = JSON.parse(settings_data.data.asset.value);
     const blocks = json_parse.current.blocks as Blocks;
     if (typeof blocks === 'object' && blocks !== null) {
-      return !Object.values(blocks).find(block => {
+      const disabled = Object.values(blocks).find(block => {
         return block.type.includes(APP_EMBED_EXTENSION_UUID);
       })?.disabled;
+      return typeof disabled === 'boolean' ? !disabled : false;
     }
     return false;
   } catch (err) {
