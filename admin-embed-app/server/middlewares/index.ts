@@ -1,4 +1,4 @@
 export * from './handleOfflineAccessToken';
 export * from './handleOnlineAccessToken';
 export * from './handleRequest';
-export * from './handleVerifyToken';
+export * from './handleVerifySession';

@@ -1,6 +1,5 @@
+import { Settings } from 'general/@types/FE/Settings';
 import { createPostMessage } from 'wiloke-react-core/utils';
-
-export type Settings = any;
 
 export type OnMessage = any;
 

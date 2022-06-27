@@ -56,6 +56,6 @@ export const getAppExtensionStatusActive = async ({ myshopifyDomain, accessToken
       positionError: 'getAppExtensionStatusActive',
       additionalData: JSON.stringify({ myshopifyDomain, accessToken }),
     });
-    return false;
+    throw err;
   }
 };

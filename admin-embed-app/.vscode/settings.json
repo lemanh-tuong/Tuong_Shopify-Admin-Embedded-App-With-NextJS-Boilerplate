@@ -11,11 +11,9 @@
     "source.fixAll.eslint": true,
     "source.fixAll": true
   },
-  "scss.scannerExclude": [
-    "**/.git"
-  ],
+  "scss.scannerExclude": ["**/.git"],
   "[shellscript]": {
-    "files.eol": "\n",
+    "files.eol": "\n"
   },
-  "files.eol": "\n",
+  "files.eol": "\n"
 }

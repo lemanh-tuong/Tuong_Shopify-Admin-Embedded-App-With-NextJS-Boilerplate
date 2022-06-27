@@ -1,6 +1,6 @@
+import { Settings } from 'general/@types/FE/Settings';
 import { ActionTypes, createReducer, handleAction } from 'wiloke-react-core/utils';
 import { changeModalRatingVisible, changeModalSaveCompleteVisible, changeSetting, getDefaultSetting, saveSetting } from '../actions/actionSetting';
-import { Settings } from '../postmessage';
 
 interface State {
   statusRequest: Status;

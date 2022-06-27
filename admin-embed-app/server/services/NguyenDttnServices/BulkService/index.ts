@@ -22,7 +22,11 @@ class BulkService implements IBulkService {
       });
       return true;
     } catch (err) {
-      reportService.createReportError({ error: err as Error, positionError: 'pushBulk' });
+      reportService.createReportError({
+        error: err as Error,
+        positionError: 'pushBulk',
+        additionalData: JSON.stringify({ shopName, body }),
+      });
       return false;
     }
   };

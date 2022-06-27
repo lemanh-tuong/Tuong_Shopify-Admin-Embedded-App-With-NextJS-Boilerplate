@@ -5,3 +5,5 @@ dist
 .env
 yarn.lock
 package-lock.json
+tsconfig.tsbuildinfo
+yarn-error.log

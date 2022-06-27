@@ -2,7 +2,7 @@ import { PathName } from 'src/routes/types';
 import * as H from 'history';
 import * as React from 'react';
 import { match } from 'react-router';
-import { GetState, LiteralUnion, LiteralUnionAndObject } from './type';
+import { GetState, LiteralUnion, LiteralUnionAndObject } from '../type';
 
 declare module 'react-router-dom' {
   export interface Location<P extends string> {

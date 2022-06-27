@@ -20,7 +20,11 @@ class UninstallAppService implements IUninstallAppService {
       });
       return true;
     } catch (err) {
-      reportService.createReportError({ error: err as Error, positionError: 'uninstallApp' });
+      reportService.createReportError({
+        error: err as Error,
+        positionError: 'uninstallApp',
+        additionalData: JSON.stringify({ shopName }),
+      });
       return false;
     }
   };

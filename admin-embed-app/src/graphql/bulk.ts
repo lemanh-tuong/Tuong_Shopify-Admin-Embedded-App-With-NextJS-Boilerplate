@@ -69,7 +69,7 @@ export const BULK = gql`
 `;
 
 export const useBulk = () => {
-  const [postBulk, { data, loading, error }] = useMutation<ShopInterface, any>(BULK);
+  const [postBulk, { data, loading, error }] = useMutation<ShopInterface, undefined>(BULK);
   return {
     data,
     loading,

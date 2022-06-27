@@ -1,5 +1,5 @@
+import { Settings } from 'general/@types/FE/Settings';
 import { createAction, createAsyncAction, createDispatchAction, createDispatchAsyncAction } from 'wiloke-react-core/utils';
-import { Settings } from '../postmessage';
 
 interface ChangeSetting {
   data: Partial<Settings>;

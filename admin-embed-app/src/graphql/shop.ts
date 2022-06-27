@@ -18,7 +18,7 @@ export const GET_SHOP_NAME = gql`
 `;
 
 export const useGetShop = () => {
-  const [getShop, { data, loading, error }] = useLazyQuery<ShopInterface, any>(GET_SHOP_NAME);
+  const [getShop, { data, loading, error }] = useLazyQuery<ShopInterface, undefined>(GET_SHOP_NAME);
   return {
     data,
     loading,

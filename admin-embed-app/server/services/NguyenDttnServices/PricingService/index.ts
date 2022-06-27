@@ -19,7 +19,11 @@ class PricingService implements IPricingService {
       });
       return true;
     } catch (err) {
-      reportService.createReportError({ error: err as Error, positionError: 'updatePricing' });
+      reportService.createReportError({
+        error: err as Error,
+        positionError: 'updatePricing',
+        additionalData: JSON.stringify({ shopName, body }),
+      });
       return false;
     }
   };

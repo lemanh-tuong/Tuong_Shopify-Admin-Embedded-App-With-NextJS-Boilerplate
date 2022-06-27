@@ -14,7 +14,7 @@ function getCount(seconds: number, num: number) {
 
 function getText(seconds: number, num: number, textSingular: TranslationName, textPlural: TranslationName) {
   const s = getCount(seconds, num);
-  return i18n.t(s > 1 ? textPlural : textSingular, { s: s.toString(), p: '' });
+  return i18n.t(s > 1 ? textPlural : textSingular, { s: s.toString() });
 }
 
 export function timeAgo(unixTimestamp: number, date: string) {

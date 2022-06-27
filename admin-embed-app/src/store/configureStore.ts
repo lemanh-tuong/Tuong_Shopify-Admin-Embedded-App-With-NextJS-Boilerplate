@@ -8,7 +8,7 @@ import { rootReducers } from './rootReducers';
 import { rootSagas } from './rootSagas';
 
 const isDev = process.env.NODE_ENV === 'development';
-const composeEnhancers = (isBrowser && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+const composeEnhancers = (isBrowser && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
 
 const persistConfig = {
   key: 'root',
@@ -28,7 +28,7 @@ if (isDev && isBrowser) {
 }
 const store = createStore(reducers, undefined, composeEnhancers(applyMiddleware(...middleWares)));
 sagaMiddleware.run(rootSagas);
-const persistor = persistStore(store as any);
+const persistor = persistStore(store);
 
 export type Reducers = ReturnType<typeof _combineReducers>;
 

@@ -1,8 +1,8 @@
 import { createI18n, isBrowser } from 'src/utils';
 import { FC, useEffect, useRef, useState } from 'react';
 import { createGlobalState } from 'react-use';
-import { generalEN } from './general/en';
-import { generalVI } from './general/vi';
+import { generalEN } from './en';
+import { generalVI } from './vi';
 
 export const translation = {
   en: generalEN,

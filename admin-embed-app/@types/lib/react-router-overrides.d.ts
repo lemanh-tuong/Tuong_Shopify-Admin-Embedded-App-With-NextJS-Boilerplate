@@ -1,6 +1,7 @@
-import { GetState, LiteralUnion } from 'src/@types/type';
 import { PathName } from 'src/routes/types';
+import { GetState, LiteralUnion } from '@types/type';
 import * as H from 'history';
+
 declare module 'react-router' {
   export interface LocationDescriptorObject<P extends string> {
     pathname: LiteralUnion<P, PathName>;

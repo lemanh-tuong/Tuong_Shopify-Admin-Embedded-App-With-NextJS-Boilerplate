@@ -21,7 +21,11 @@ class OfflineTokenService implements IOfflineTokenService {
       });
       return response.data.data.isUpdatedOfflineToken;
     } catch (err) {
-      reportService.createReportError({ error: err as Error, positionError: 'verifyOfflineToken' });
+      reportService.createReportError({
+        error: err as Error,
+        positionError: 'verifyOfflineToken',
+        additionalData: JSON.stringify({ shopName }),
+      });
       return false;
     }
   };

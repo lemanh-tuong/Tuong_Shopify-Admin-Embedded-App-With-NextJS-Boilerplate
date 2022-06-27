@@ -1,4 +1,4 @@
-import { InitializationApp } from 'general/MyApi';
+import { InitializationApp_Response } from 'general/@types/BE/InitializationApp';
 import { fetchAPI } from 'src/utils';
 import { put, retry, takeLatest } from '@redux-saga/core/effects';
 import { AxiosResponse } from 'axios';
@@ -7,7 +7,7 @@ import { initialization } from '../actions/actionInitializationPage';
 
 function* handleInitialization({ payload }: ReturnType<typeof initialization.request>) {
   try {
-    const res: AxiosResponse<InitializationApp> = yield retry(3, 1000, fetchAPI.request, {
+    const res: AxiosResponse<InitializationApp_Response> = yield retry(3, 1000, fetchAPI.request, {
       url: `${payload.app.localOrigin}/api/initialization`,
       baseURL: '',
     });
@@ -21,6 +21,7 @@ function* handleInitialization({ payload }: ReturnType<typeof initialization.req
       }),
     );
   } catch (error) {
+    console.log(error);
     yield put(initialization.failure(undefined));
   }
 }

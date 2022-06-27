@@ -17,13 +17,13 @@ export class ConfigureAxios {
       const state = require('src/store/configureStore').store.getState() as AppState;
       const app = state.initialization.app;
       const shopDomain = state.initialization.shopDomain;
-      if ((!config.url?.includes('initialization') && (!app || !shopDomain)) || !app) {
+      if (!app) {
         throw new Error('App chưa đc khởi tạo');
       }
       const sessionToken = await getSessionToken(app);
       config.headers.Authorization = `Bearer ${sessionToken}`;
 
-      if (!config.url?.includes('app-recommendations') && !config.url?.includes('initialization')) {
+      if (!config.url?.includes('app-recommendations')) {
         config.headers['X-ShopName'] = shopDomain;
       }
       return config;

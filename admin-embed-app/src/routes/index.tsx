@@ -7,6 +7,7 @@ import { initializationSelector } from 'src/containers/selectors';
 import { SettingPage } from 'src/containers/SettingPage/SettingPage';
 import { useTidioChat } from 'src/hooks/useTidioChat';
 import { isBrowser } from 'src/utils/isBrowser';
+import { AccessToken } from 'src/components/AccessToken/AccessToken';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -55,6 +56,7 @@ export const Routes = () => {
     return (
       <Switch>
         {pages.map(({ component, path, exact }) => {
+          // @ts-ignore
           return <Route key={path} component={component} exact={exact} path={path} />;
         })}
       </Switch>
@@ -62,11 +64,12 @@ export const Routes = () => {
   };
 
   return (
+    // @ts-ignore
     <BrowserRouter>
       <RoutePropagator />
       {_renderRoute()}
       {statusInitialization === 'success' && <XinRate />}
-      {/* {shopDomain && <AccessToken shopDomain={shopDomain} />} */}
+      {shopDomain && <AccessToken shopDomain={shopDomain} />}
     </BrowserRouter>
   );
 };

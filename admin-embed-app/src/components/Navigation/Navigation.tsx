@@ -37,9 +37,9 @@ export const Navigation: FC<NavigationProps> = ({ data }) => {
   const renderLink = (item: MenuItemInterface): ReactNode => {
     const { isReactRouter, href, label, exact, onClick } = item;
 
-    if (isReactRouter) {
+    if (isReactRouter && href) {
       return (
-        <NavLinkWithStyles {...linkProps} activeClassName={styles(css.active)} exact={exact} to={href as any}>
+        <NavLinkWithStyles {...linkProps} activeClassName={styles(css.active)} exact={exact} to={href}>
           {label}
         </NavLinkWithStyles>
       );

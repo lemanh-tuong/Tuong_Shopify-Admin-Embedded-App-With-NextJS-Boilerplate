@@ -1,6 +1,7 @@
-import { isBrowser } from 'src/utils/isBrowser';
-import { storage } from 'src/utils/storage';
-import { path } from 'ramda';
+import * as R from 'ramda';
+import { isBrowser } from '../isBrowser';
+import { storage } from '../storage';
+import { strToCapitalize } from '../strToCapitalize';
 import { I18n, TransitionDefault } from './types';
 
 export const createI18n = <T extends TransitionDefault>(source: T): I18n<T[keyof T]> => {
@@ -12,7 +13,7 @@ export const createI18n = <T extends TransitionDefault>(source: T): I18n<T[keyof
   };
 
   const _getLocale = () => {
-    return _locale;
+    return _locale.replace(/(-|_).*/g, '');
   };
 
   const translation: I18n<T[keyof T]>['t'] = (key, options) => {
@@ -21,17 +22,29 @@ export const createI18n = <T extends TransitionDefault>(source: T): I18n<T[keyof
     if (!_lang) {
       return '';
     }
-    const value = key.includes('.') ? path(key.split('.'), _lang) : _lang[key as string];
+    const value = key.includes('.') ? R.path(key.split('.'), _lang) : _lang[key as string];
     if (!_options) {
-      return value;
+      return value.replace(/%%(\s*\w*\s*)%%/g, '').trim();
     }
-    return Object.entries(_options).reduce((acc, [prop, value]) => {
-      const regex = new RegExp(`\\{\\{\\s*${prop}\\s*\\}\\}`, 'g');
+    const text = Object.entries(R.omit(['textTransform'], _options)).reduce<string>((acc, [prop, value]) => {
+      const regex = new RegExp(`%%\\s*${prop}\\s*%%`, 'g');
       if (!acc) {
         return '';
       }
-      return acc.replace(regex, value);
+      return acc.replace(regex, value).trim();
     }, value);
+
+    switch (_options.textTransform) {
+      case 'uppercase':
+        return text.toUpperCase();
+      case 'lowercase':
+        return text.toLowerCase();
+      case 'capitalize':
+        return strToCapitalize(text);
+      case 'none':
+      default:
+        return text;
+    }
   };
 
   return {

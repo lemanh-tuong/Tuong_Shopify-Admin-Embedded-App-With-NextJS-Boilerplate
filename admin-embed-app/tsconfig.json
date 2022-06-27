@@ -19,7 +19,10 @@
     "experimentalDecorators": true,
     "paths": {
       "server/*": ["./server/*"],
-      "general/*": ["./general/*"]
+      "general/*": ["./general/*"],
+      "src/*": ["./src/*"],
+      "@types/*": ["./@types/*"],
+      "*": ["./@types/lib/*", "*"]
     },
     "plugins": [
       {

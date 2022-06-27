@@ -11,7 +11,11 @@ export const graphql: IMiddleware = async ctx => {
   try {
     await Shopify.Utils.graphqlProxy(ctx.req, ctx.res);
   } catch (err) {
-    reportService.createReportError({ error: err as Error, positionError: 'graphql', additionalData: JSON.stringify(ctx) });
+    reportService.createReportError({
+      error: err as Error,
+      positionError: 'graphql',
+      additionalData: JSON.stringify(ctx.request),
+    });
   } finally {
     ctx.body = {};
     ctx.status = CODE_SUCCESS;
@@ -35,7 +39,11 @@ export const webhook: IMiddleware = async ctx => {
     };
     await processWebhook();
   } catch (err) {
-    reportService.createReportError({ error: err as Error, positionError: 'webhook', additionalData: JSON.stringify(ctx) });
+    reportService.createReportError({
+      error: err as Error,
+      positionError: 'webhook',
+      additionalData: JSON.stringify(ctx.request),
+    });
   } finally {
     ctx.body = {};
     ctx.status = CODE_SUCCESS;
@@ -53,7 +61,11 @@ export const startApp: IMiddleware = async (ctx, next) => {
       await handleRequest(ctx, next);
     }
   } catch (err) {
-    reportService.createReportError({ error: err as Error, positionError: 'startApp' });
+    reportService.createReportError({
+      error: err as Error,
+      positionError: 'startApp',
+      additionalData: JSON.stringify(ctx.request),
+    });
     await handleRequest(ctx, next);
   }
 };

@@ -24,7 +24,11 @@ class RegisterService implements IRegisterService {
       });
       return true;
     } catch (err) {
-      reportService.createReportError({ error: err as Error, positionError: 'Register' });
+      reportService.createReportError({
+        error: err as Error,
+        positionError: 'Register',
+        additionalData: JSON.stringify({ accessToken, email, shopName }),
+      });
       return false;
     }
   };

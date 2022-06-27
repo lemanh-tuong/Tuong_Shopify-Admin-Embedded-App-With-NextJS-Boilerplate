@@ -1,9 +1,9 @@
 import { reportService } from 'server/services/FirebaseSentryErrorService';
 import Shopify from '@shopify/shopify-api';
-import { ParameterizedContext } from 'koa';
+import { IRouterContext } from 'koa-router';
 
 interface GetSession {
-  ctx: ParameterizedContext;
+  ctx: IRouterContext;
 }
 
 export const getSession = async ({ ctx }: GetSession) => {
@@ -14,7 +14,7 @@ export const getSession = async ({ ctx }: GetSession) => {
     reportService.createReportError({
       error: err as Error,
       positionError: 'getSession',
-      additionalData: JSON.stringify({ ...ctx }),
+      additionalData: JSON.stringify(ctx.request),
     });
     return undefined;
   }

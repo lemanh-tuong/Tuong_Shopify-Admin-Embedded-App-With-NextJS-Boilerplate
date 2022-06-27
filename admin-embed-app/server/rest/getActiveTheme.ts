@@ -40,6 +40,6 @@ export const getActiveTheme = async ({ myshopifyDomain, accessToken }: GetActive
       positionError: 'getActiveTheme',
       additionalData: JSON.stringify({ myshopifyDomain, accessToken }),
     });
-    return undefined;
+    throw err;
   }
 };

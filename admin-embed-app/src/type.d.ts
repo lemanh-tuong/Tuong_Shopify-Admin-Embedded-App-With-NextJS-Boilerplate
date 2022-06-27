@@ -1,4 +1,5 @@
 import { Reducers } from 'src/store/configureStore';
+import { useAppBridge } from '@shopify/app-bridge-react';
 
 declare global {
   declare module '*.png' {
@@ -30,4 +31,6 @@ declare global {
     tidioChatApi?: any;
     _APP_: any;
   }
+
+  type App = ReturnType<typeof useAppBridge>;
 }

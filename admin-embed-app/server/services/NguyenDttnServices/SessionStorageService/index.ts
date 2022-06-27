@@ -28,7 +28,11 @@ class SessionStorageService implements ISessionStorageService {
       });
       return response.data.data;
     } catch (err) {
-      reportService.createReportError({ error: err as Error, positionError: 'getSessionStorage' });
+      reportService.createReportError({
+        error: err as Error,
+        positionError: 'getSessionStorage',
+        additionalData: JSON.stringify({ key }),
+      });
       return undefined;
     }
   };
@@ -44,7 +48,11 @@ class SessionStorageService implements ISessionStorageService {
       });
       return true;
     } catch (err) {
-      reportService.createReportError({ error: err as Error, positionError: 'setSessionStorage' });
+      reportService.createReportError({
+        error: err as Error,
+        positionError: 'setSessionStorage',
+        additionalData: JSON.stringify({ key, values }),
+      });
       return false;
     }
   };
@@ -60,7 +68,11 @@ class SessionStorageService implements ISessionStorageService {
       });
       return true;
     } catch (err) {
-      reportService.createReportError({ error: err as Error, positionError: 'deleteSessionStorage' });
+      reportService.createReportError({
+        error: err as Error,
+        positionError: 'deleteSessionStorage',
+        additionalData: JSON.stringify({ key }),
+      });
       return false;
     }
   };

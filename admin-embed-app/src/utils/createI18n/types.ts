@@ -2,7 +2,7 @@ type TrimLeft<T extends string> = T extends '' ? T : T extends ` ${infer U}` ? T
 
 type Trim<T extends string> = T extends '' ? T : TrimLeft<T> extends `${infer U} ` ? Trim<U> : TrimLeft<T>;
 
-type OptionKeys<T extends string> = T extends `${any}{{${infer U}}}${infer C}` ? Trim<U> | OptionKeys<C> : never;
+type OptionKeys<T extends string> = T extends `${any}%%${infer U}%%${infer C}` ? Trim<U> | OptionKeys<C> : never;
 
 type PathImpl<T, K extends keyof T> = K extends string
   ? T[K] extends Record<string, any>
@@ -24,12 +24,16 @@ type PathValue<T, P extends Path<T>> = P extends `${infer K}.${infer Rest}`
   ? T[P]
   : never;
 
+export type TextTransform = 'none' | 'uppercase' | 'lowercase' | 'capitalize';
+
 export interface I18n<T extends Record<string, any>> {
   setLocale: (locale: string) => void;
   getLocale: () => string;
   t<K extends Path<T>>(
     key: K,
-    options?: OptionKeys<PathValue<T, K>> extends never ? undefined : { [P in OptionKeys<PathValue<T, K>>]: string },
+    options?: OptionKeys<PathValue<T, K>> extends never
+      ? { textTransform?: TextTransform }
+      : { [P in OptionKeys<PathValue<T, K>>]: string } & { textTransform?: TextTransform },
   ): string;
 }
 

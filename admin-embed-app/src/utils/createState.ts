@@ -43,7 +43,7 @@ export class CreateState<S = any> implements CreateStateInterface<S> {
         try {
           this.state = JSON.parse(state);
         } catch {
-          this.state = state as S;
+          this.state = (state as unknown) as S;
         }
       }
     }
