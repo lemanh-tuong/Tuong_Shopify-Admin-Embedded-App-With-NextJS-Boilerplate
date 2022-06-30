@@ -19,7 +19,9 @@ interface GetThemesResponseSuccess {
 }
 
 interface GetActiveTheme {
+  /** domain của shop */
   myshopifyDomain: string;
+  /** online token hoặc offline token */
   accessToken: string;
 }
 export const getActiveTheme = async ({ myshopifyDomain, accessToken }: GetActiveTheme) => {

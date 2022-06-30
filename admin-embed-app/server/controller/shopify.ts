@@ -10,6 +10,7 @@ import Shopify from '@shopify/shopify-api';
 export const graphql: IMiddleware = async ctx => {
   try {
     await Shopify.Utils.graphqlProxy(ctx.req, ctx.res);
+    // Có lẽ sẽ check nếu online token có vấn đề thì sẽ redirect lại khâu xử lí online token
   } catch (err) {
     reportService.createReportError({
       error: err as Error,
@@ -50,7 +51,7 @@ export const webhook: IMiddleware = async ctx => {
   }
 };
 
-/** api để xử lí khi vào app */
+/** api để xử lí điều hướng xử lí auth khi vào app */
 export const startApp: IMiddleware = async (ctx, next) => {
   try {
     const shop = String(ctx.query.shop);

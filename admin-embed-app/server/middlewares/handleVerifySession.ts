@@ -8,7 +8,10 @@ const MESSAGE = {
   CATCH_CLAUSE: 'Token invalid',
 };
 
-/** middleware dùng để xử lí vấn đề verify token */
+/**
+ * Middleware dùng để xử lí vấn đề verify session (tức online) token
+ * Lưu ý hiện tại function này chỉ đúng cho các request được thực hiện từ next client - Các trường hợp sẽ k chính xác
+ */
 export const handleVerifySession: IMiddleware = async (ctx, next) => {
   try {
     const session = await getSession({ ctx });

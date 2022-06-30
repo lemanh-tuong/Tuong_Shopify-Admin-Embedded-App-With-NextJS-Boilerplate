@@ -24,11 +24,19 @@ interface Block {
 type Blocks = undefined | null | Record<string, Block>;
 
 interface GetAppExtensionStatusActive {
+  /** domain của shop */
   myshopifyDomain: string;
+  /** online token hoặc session token */
   accessToken: string;
+  /** id của theme mà shop đang active (tức role="main") */
   themeId: number | undefined;
 }
 
+/**
+ * Function chịu trách nhiệm trả về cờ trạng thái xem theme app extension được bật hay chưa
+ * Bằng cách check file "settings_data.json" tại folder "Config" tại theme đang active của shop
+ * Bằng cách active, deactive và xóa app có thể thấy được quy luật đặt tên => Sẽ không giải thích chi tiết => Chi tiết tự tìm hiểu
+ */
 export const getAppExtensionStatusActive = async ({ myshopifyDomain, accessToken, themeId }: GetAppExtensionStatusActive): Promise<boolean> => {
   if (themeId === undefined) {
     return false;

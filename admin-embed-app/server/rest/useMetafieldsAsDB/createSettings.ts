@@ -37,7 +37,7 @@ interface ShopifyCreateMetaFieldResponse {
 }
 
 /**
- * @tuong -> Lưu ý khi metafield với "namespace" và "key" đã tồn tại shopify vẫn trả vê kết quả của metafield đó
+ * @tuong -> Lưu ý khi metafield với "namespace" và "key" đã tồn tại shopify vẫn trả vê kết quả đã được ghi đè của metafield đó
  */
 export const createSettings = async ({ accessToken, myshopifyDomain, settings }: CreateSettings) => {
   try {

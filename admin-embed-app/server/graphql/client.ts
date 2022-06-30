@@ -1,8 +1,11 @@
 import ApolloClient from 'apollo-boost';
 
 interface CreateClient {
+  /** Domain của shop */
   shopDomain: string;
+  /** Online token hoặc offline token */
   accessToken: string;
+  /** API Version - Thường là lấy luôn biến môi trường của app */
   apiVersion: string;
 }
 

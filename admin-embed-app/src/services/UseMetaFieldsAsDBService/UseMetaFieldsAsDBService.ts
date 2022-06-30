@@ -19,7 +19,6 @@ export class UseMetaFieldsAsDBService {
     return response.data;
   }
 
-  // @tuong -> Lưu ý khi metafield với "namespace" và "key" đã tồn tại shopify vẫn trả vê kết quả của metafield đó
   async createSettings(data: CreateSettings_ExpectBodyData) {
     const response: AxiosResponse<CreateSettings_Response> = await fetchAPI.request({
       url: this.getEndpoint(),

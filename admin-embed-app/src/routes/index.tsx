@@ -7,7 +7,7 @@ import { initializationSelector } from 'src/containers/selectors';
 import { SettingPage } from 'src/containers/SettingPage/SettingPage';
 import { useTidioChat } from 'src/hooks/useTidioChat';
 import { isBrowser } from 'src/utils/isBrowser';
-import { AccessToken } from 'src/components/AccessToken/AccessToken';
+import { AccessToken } from 'src/containers/AccessToken/AccessToken';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';

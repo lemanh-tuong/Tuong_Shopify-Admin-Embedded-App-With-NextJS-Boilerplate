@@ -41,6 +41,7 @@ const GET_PRODUCTS = gql`
   }
 `;
 
+/** File này chỉ là demo về cách viết graphql tại file server. Không liên quan gì đến chức năng trong app boilerplate */
 export const getProducts = async ({ client, variables }: { client: ApolloClient<any>; variables: ProductsVars }) => {
   const res = await client.query<ProductsInterface>({
     query: GET_PRODUCTS,

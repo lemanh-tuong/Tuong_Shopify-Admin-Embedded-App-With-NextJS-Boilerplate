@@ -13,6 +13,7 @@ import adminSchema from './admin-schema.json';
 
 const cache = new InMemoryCache({
   fragmentMatcher: new IntrospectionFragmentMatcher({
+    // keyword: IntrospectionQuery shopify graphql
     introspectionQueryResultData: adminSchema.data as IntrospectionResultData,
   }),
 });

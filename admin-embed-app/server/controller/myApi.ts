@@ -70,7 +70,7 @@ export const createSettingsUseMetaFieldsAsDB: IMiddleware = async ctx => {
 };
 
 /**
- * @deprecated -> "createSettingsUseMetaFieldsAsDB" là đủ
+ * @deprecated -> tại thời điểm comment được viết api create metafield của shopify tự động ghi đè giá trị metafield có cùng key và namespace -> "createSettingsUseMetaFieldsAsDB" là đủ
  * API để lưu settings vào metafield của shop */
 export const updateSettingsUseMetaFieldsAsDB: IMiddleware = async ctx => {
   try {

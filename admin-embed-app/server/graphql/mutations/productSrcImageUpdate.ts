@@ -39,7 +39,11 @@ const PRODUCT_SRC_IMAGE_UPDATE = gql`
   }
 `;
 
-export const productSrcImageUpdate = async ({ client }: { client: ApolloClient<any>; variables: ProductSrcImageUpdateVariables }) => {
-  const res = await client.mutate<ProductSrcImageResponse, ProductSrcImageUpdateVariables>({ mutation: PRODUCT_SRC_IMAGE_UPDATE });
+/** File này chỉ là demo về cách viết graphql tại file server. Không liên quan gì đến chức năng trong app boilerplate */
+export const productSrcImageUpdate = async ({ client, variables }: { client: ApolloClient<any>; variables: ProductSrcImageUpdateVariables }) => {
+  const res = await client.mutate<ProductSrcImageResponse, ProductSrcImageUpdateVariables>({
+    mutation: PRODUCT_SRC_IMAGE_UPDATE,
+    variables,
+  });
   return res;
 };

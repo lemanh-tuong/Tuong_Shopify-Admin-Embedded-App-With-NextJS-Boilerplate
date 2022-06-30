@@ -50,7 +50,10 @@ function STAGED_UPLOADS_CREATE({ input }: StagedUploadsCreateVariables) {
   `;
 }
 
+/** File này chỉ là demo về cách viết graphql tại file server. Không liên quan gì đến chức năng trong app boilerplate */
 export const stagedUploadsCreate = async ({ client, variables }: { client: ApolloClient<any>; variables: StagedUploadsCreateVariables }) => {
-  const res = await client.mutate<StagedUploadsCreateResponse, StagedUploadsCreateVariables>({ mutation: STAGED_UPLOADS_CREATE(variables) });
+  const res = await client.mutate<StagedUploadsCreateResponse, StagedUploadsCreateVariables>({
+    mutation: STAGED_UPLOADS_CREATE(variables),
+  });
   return res;
 };

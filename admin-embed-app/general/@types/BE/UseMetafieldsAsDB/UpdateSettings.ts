@@ -6,6 +6,8 @@ export interface UpdateSettings_ExpectBodyData {
 }
 
 export interface UpdateSettings_Response {
+  /** Trả lại settings sau lưu */
   settings: Settings;
+  /** Trả lại id để phòng trường hợp api create metafield của shopify không còn tự động ghi đè giá trị cũ nữa mà phải dùng api update metafield  */
   metafieldId: number;
 }
