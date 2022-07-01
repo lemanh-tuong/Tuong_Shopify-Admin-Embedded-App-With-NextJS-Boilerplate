@@ -8,27 +8,39 @@ Do có shop không chèn file "APP_NAME.js", "APP_NAME.css" nên phải viết f
 
 <script id="JS_APP_NAME">
   const jsFile = !!document.querySelector('script[src*="APP_NAME.js"]');
-  const cssFile = !!document.querySelector('script[src*="APP_NAME.css"]');
-  console.log("Magic badges's initing", jsFile, cssFile);
+  const cssFile = !!document.querySelector('link[href*="APP_NAME.css"]');
+  console.log("APP_NAME's initing", jsFile, cssFile);
   if(!jsFile) {
-    console.log('Magic badges - JS loaded');
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = 'APP_NAME.netlify.js';
-    document.body.appendChild(script);
+    console.log('APP_NAME - JS loading');
+    const $scriptEl = document.createElement('script');
+    $scriptEl.type = 'text/javascript';
+    $scriptEl.src = 'APP_NAME.netlify.js';
+    $scriptEl.addEventListener("load", () => {
+      console.log("APP_NAME loaded");
+    });
+    $scriptEl.addEventListener("error", (e) => {
+      console.log("APP_NAME load failed", e);
+    });
+    document.body.appendChild($scriptEl);
   }
   if(!cssFile) {
-    console.log('Magic badges - CSS loaded');
+    console.log('APP_NAME - CSS loading');
     const $linkEl = document.createElement('link');
     $linkEl.rel = 'stylesheet';
     $linkEl.href = 'APP_NAME.netlify.css';
+    $linkEl.addEventListener("load", () => {
+      console.log("APP_NAME - CSS loaded");
+    });
+    $linkEl.addEventListener("error", (e) => {
+      console.log("APP_NAME - CSS load failed", e);
+    });
     document.body.appendChild($linkEl);
   }
 </script>
 
 {% schema %}
 {
-  "name": "Magic Badges",
+  "name": "APP_NAME",
   "target": "body",
   "javascript": "APP_NAME.js",
   "stylesheet": "APP_NAME.css",
