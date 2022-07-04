@@ -59,6 +59,8 @@ export const startApp: IMiddleware = async (ctx, next) => {
     if (!session) {
       ctx.redirect(`/install/auth?shop=${shop}`);
     } else {
+      // @tuong -> 1 điều kiện gì đó để redirect đến nơi lấy onlineToken
+      // ctx.redirect(`/auth?shop=${shop}`);
       await handleRequest(ctx, next);
     }
   } catch (err) {
