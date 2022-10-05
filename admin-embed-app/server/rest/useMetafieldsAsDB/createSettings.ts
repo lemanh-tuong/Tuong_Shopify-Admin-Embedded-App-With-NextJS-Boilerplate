@@ -2,6 +2,7 @@ import { API_VERSION, APP_NAME } from 'server/env';
 import { reportService } from 'server/services/FirebaseSentryErrorService';
 import { Settings } from 'general/@types/FE/Settings';
 import axios from 'axios';
+import { ShopifyRestError } from '../ShopifyRestError';
 
 export interface CreateSettings {
   myshopifyDomain: string;
@@ -59,12 +60,13 @@ export const createSettings = async ({ accessToken, myshopifyDomain, settings }:
       },
     });
     return settings_data.data.metafield;
-  } catch (err) {
+  } catch (error) {
+    const error_ = error as Error;
     reportService.createReportError({
-      error: err as Error,
+      error: error_,
       positionError: 'createSettings',
       additionalData: JSON.stringify({ myshopifyDomain, accessToken, settings }),
     });
-    throw err;
+    throw new ShopifyRestError(error_);
   }
 };

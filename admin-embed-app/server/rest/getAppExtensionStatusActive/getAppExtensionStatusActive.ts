@@ -1,6 +1,7 @@
 import { API_VERSION, APP_EMBED_EXTENSION_UUID } from 'server/env';
 import { reportService } from 'server/services/FirebaseSentryErrorService';
 import axios from 'axios';
+import { ShopifyRestError } from '../ShopifyRestError';
 
 interface GetSettingsData {
   asset: {
@@ -59,12 +60,13 @@ export const getAppExtensionStatusActive = async ({ myshopifyDomain, accessToken
       return typeof disabled === 'boolean' ? !disabled : false;
     }
     return false;
-  } catch (err) {
+  } catch (error) {
+    const error_ = error as Error;
     reportService.createReportError({
-      error: err as Error,
+      error: error_,
       positionError: 'getAppExtensionStatusActive',
       additionalData: JSON.stringify({ myshopifyDomain, accessToken }),
     });
-    throw err;
+    throw new ShopifyRestError(error_);
   }
 };

@@ -1,6 +1,6 @@
-import { GetSettings_Response } from 'general/@types/BE/UseMetafieldsAsDB/GetSettings';
+import { GetSettings_ResponseSuccess } from 'general/@types/BE/UseMetafieldsAsDB/GetSettings';
 import { fetchAPI } from 'src/utils';
-import { CreateSettings_ExpectBodyData, CreateSettings_Response } from 'general/@types/BE/UseMetafieldsAsDB/CreateSettings';
+import { CreateSettings_ExpectBodyData, CreateSettings_ResponseSuccess } from 'general/@types/BE/UseMetafieldsAsDB/CreateSettings';
 import { UpdateSettings_ExpectBodyData } from 'general/@types/BE/UseMetafieldsAsDB/UpdateSettings';
 import { AxiosResponse } from 'axios';
 
@@ -13,14 +13,14 @@ export class UseMetaFieldsAsDBService {
   }
 
   async getSettings() {
-    const response: AxiosResponse<GetSettings_Response> = await fetchAPI.request({
+    const response: AxiosResponse<GetSettings_ResponseSuccess> = await fetchAPI.request({
       url: this.getEndpoint(),
     });
     return response.data;
   }
 
   async createSettings(data: CreateSettings_ExpectBodyData) {
-    const response: AxiosResponse<CreateSettings_Response> = await fetchAPI.request({
+    const response: AxiosResponse<CreateSettings_ResponseSuccess> = await fetchAPI.request({
       url: this.getEndpoint(),
       method: 'post',
       data,

@@ -3,6 +3,7 @@ import { initialization } from '../actions/actionInitializationPage';
 
 interface State {
   statusInitialization: Status;
+  isInvalidToken: boolean;
   app?: App;
   shopDomain?: string;
   email?: string;
@@ -14,6 +15,7 @@ type Actions = ActionTypes<typeof initialization>;
 
 const defaultState: State = {
   statusInitialization: 'idle',
+  isInvalidToken: false,
   app: undefined,
   shopDomain: undefined,
   email: undefined,
@@ -27,6 +29,7 @@ export const reducerInitialization = createReducer<State, Actions>(defaultState,
     return {
       ...state,
       statusInitialization: 'loading',
+      isInvalidToken: false,
       app,
     };
   }),
@@ -41,10 +44,12 @@ export const reducerInitialization = createReducer<State, Actions>(defaultState,
       themeId,
     };
   }),
-  handleAction('@InitializationPage/initializationFailure', ({ state }) => {
+  handleAction('@InitializationPage/initializationFailure', ({ state, action }) => {
+    const { isInvalidToken } = action.payload;
     return {
       ...state,
       statusInitialization: 'failure',
+      isInvalidToken,
     };
   }),
 ]);

@@ -52,9 +52,11 @@ export const TIDIO_KEY: string = nextClientEnv.NEXT_PUBLIC_TIDIO_KEY;
 export const TIDIO_HELLO_MESSAGE: string = nextClientEnv.NEXT_PUBLIC_TIDIO_HELLO_MESSAGE; // Message chào khi mới vào app
 export const TIDIO_REQUEST_FEATURES_MESSAGE: string = nextClientEnv.NEXT_PUBLIC_TIDIO_REQUEST_FEATURES_MESSAGE; // Message khi muốn yêu cầu thêm tính năng mới
 export const TIDIO_UNLOCK_FEATURES_MESSAGE: string = nextClientEnv.NEXT_PUBLIC_TIDIO_UNLOCK_FEATURES_MESSAGE; // Message khi muốn unlock 1 feature - cái mà cần phải pricing để mở nếu trong thời gian không có người support
-// @tuong -> @deprecated Access token được dùng ở component AccessToken
+
+// Lọt sàng xuống nia -> Nếu BE sai thì vẫn có thể dùng component "AccessToken" để xử lý offline token
 export const GET_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT: string = nextClientEnv.NEXT_PUBLIC_GET_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT;
 export const CREATE_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT: string = nextClientEnv.NEXT_PUBLIC_CREATE_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT;
+
 // Pricing
 export const API_PROMO_CODE_URL: string = nextClientEnv.NEXT_PUBLIC_API_PROMO_CODE_URL;
 export const API_CHARGE_URL: string = nextClientEnv.NEXT_PUBLIC_API_CHARGE_URL;

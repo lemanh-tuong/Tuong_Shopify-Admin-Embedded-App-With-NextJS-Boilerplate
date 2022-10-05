@@ -1,13 +1,13 @@
-import { InitializationApp_Response } from 'general/@types/BE/InitializationApp';
+import { InitializationApp_ResponseSuccess, InitializationApp_ResponseError } from 'general/@types/BE/InitializationApp';
 import { fetchAPI } from 'src/utils';
 import { put, retry, takeLatest } from '@redux-saga/core/effects';
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { getActionType } from 'wiloke-react-core/utils';
 import { initialization } from '../actions/actionInitializationPage';
 
 function* handleInitialization({ payload }: ReturnType<typeof initialization.request>) {
   try {
-    const res: AxiosResponse<InitializationApp_Response> = yield retry(3, 1000, fetchAPI.request, {
+    const res: AxiosResponse<InitializationApp_ResponseSuccess> = yield retry(3, 1000, fetchAPI.request, {
       url: `${payload.app.localOrigin}/api/initialization`,
       baseURL: '',
     });
@@ -21,8 +21,13 @@ function* handleInitialization({ payload }: ReturnType<typeof initialization.req
       }),
     );
   } catch (error) {
-    console.log(error);
-    yield put(initialization.failure(undefined));
+    const error_ = error as AxiosError;
+    if (error_.isAxiosError) {
+      const isInvalidToken = (error_.response?.data as InitializationApp_ResponseError).isInvalidToken;
+      yield put(initialization.failure({ isInvalidToken }));
+    } else {
+      yield put(initialization.failure({ isInvalidToken: false }));
+    }
   }
 }
 

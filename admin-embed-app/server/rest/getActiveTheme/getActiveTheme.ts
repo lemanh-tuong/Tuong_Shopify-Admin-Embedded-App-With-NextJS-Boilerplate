@@ -1,6 +1,7 @@
 import { API_VERSION } from 'server/env';
 import { reportService } from 'server/services/FirebaseSentryErrorService';
 import axios from 'axios';
+import { ShopifyRestError } from '../ShopifyRestError';
 
 interface ShopifyTheme {
   admin_graphql_api_id: string;
@@ -36,12 +37,13 @@ export const getActiveTheme = async ({ myshopifyDomain, accessToken }: GetActive
 
     const activeTheme = res.data.themes.find(theme => theme.role === 'main');
     return activeTheme;
-  } catch (err) {
+  } catch (error) {
+    const error_ = error as Error;
     reportService.createReportError({
-      error: err as Error,
+      error: error_,
       positionError: 'getActiveTheme',
       additionalData: JSON.stringify({ myshopifyDomain, accessToken }),
     });
-    throw err;
+    throw new ShopifyRestError(error_);
   }
 };

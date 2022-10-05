@@ -1,8 +1,11 @@
 import { APP_NAME, CREATE_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT, GET_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT } from 'src/env';
 import { fetchAPI } from 'src/utils';
+import { Retry } from 'src/components/Retry/Retry';
 import { AxiosResponse } from 'axios';
 import { FC, useEffect, useState } from 'react';
 import { Text, View } from 'wiloke-react-core';
+import { useSelector } from 'react-redux';
+import { initializationSelector } from '../selectors';
 import * as styles from './styles';
 
 interface AccessTokenProps {
@@ -21,6 +24,8 @@ interface State {
 }
 
 export const AccessToken: FC<AccessTokenProps> = ({ shopDomain }) => {
+  const { isInvalidToken } = useSelector(initializationSelector);
+
   const [state, setState] = useState<State>({
     status: 'idle',
     isUpdatedOfflineToken: false,
@@ -47,10 +52,25 @@ export const AccessToken: FC<AccessTokenProps> = ({ shopDomain }) => {
   };
 
   useEffect(() => {
-    if (state.status === 'idle' || state.status === 'failure') {
+    if (GET_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT && (state.status === 'idle' || state.status === 'failure')) {
       getAccessToken();
     }
   }, [state.status]);
+
+  if (isInvalidToken) {
+    return (
+      <View css={styles.container}>
+        <View css={styles.content}>
+          <Text css={styles.title}>Something went wrong</Text>
+          <Retry
+            onClick={() => {
+              window.open(`${CREATE_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT}/?shop=${shopDomain}&route=shop-installation`);
+            }}
+          />
+        </View>
+      </View>
+    );
+  }
 
   if (state.status === 'success' && !state.isUpdatedOfflineToken) {
     return (

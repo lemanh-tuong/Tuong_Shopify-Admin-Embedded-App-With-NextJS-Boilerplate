@@ -1,16 +1,21 @@
-import { InitializationApp_Response } from 'general/@types/BE/InitializationApp';
+import { InitializationApp_ResponseSuccess, InitializationApp_ResponseError } from 'general/@types/BE/InitializationApp';
 import { CODE_ERROR } from 'server/const';
 import { API_VERSION } from 'server/env';
 import { createClient, getShopProperties } from 'server/graphql';
-import { getActiveTheme, getAppExtensionStatusActive } from 'server/rest';
-import { createSettings } from 'server/rest/useMetafieldsAsDB/createSettings';
-import { getSettings } from 'server/rest/useMetafieldsAsDB/getSettings';
+import { getActiveTheme, getAppExtensionStatusActive, createSettings, getSettings, updateSettings, ShopifyRestError } from 'server/rest';
 import { reportService } from 'server/services/FirebaseSentryErrorService';
 import { getSessionTokenAfterVerify } from 'server/utils/getSessionAfterVerify';
-import { CreateSettings_ExpectBodyData, CreateSettings_Response } from 'general/@types/BE/UseMetafieldsAsDB/CreateSettings';
-import { GetSettings_Response } from 'general/@types/BE/UseMetafieldsAsDB/GetSettings';
-import { UpdateSettings_ExpectBodyData, UpdateSettings_Response } from 'general/@types/BE/UseMetafieldsAsDB/UpdateSettings';
-import { updateSettings } from 'server/rest/useMetafieldsAsDB/updateSettings';
+import {
+  CreateSettings_ExpectBodyData,
+  CreateSettings_ResponseError,
+  CreateSettings_ResponseSuccess,
+} from 'general/@types/BE/UseMetafieldsAsDB/CreateSettings';
+import { GetSettings_ResponseError, GetSettings_ResponseSuccess } from 'general/@types/BE/UseMetafieldsAsDB/GetSettings';
+import {
+  UpdateSettings_ExpectBodyData,
+  UpdateSettings_ResponseError,
+  UpdateSettings_ResponseSuccess,
+} from 'general/@types/BE/UseMetafieldsAsDB/UpdateSettings';
 import { Settings } from 'general/@types/FE/Settings';
 import { IMiddleware } from 'koa-router';
 
@@ -32,17 +37,27 @@ export const initializationApp: IMiddleware = async ctx => {
       appExtensionActived: actvied,
       email: data.shop.email,
       myshopifyDomain: data.shop.myshopifyDomain,
-    } as InitializationApp_Response;
-  } catch (err) {
+    } as InitializationApp_ResponseSuccess;
+  } catch (error) {
+    const error_ = error as Error;
     reportService.createReportError({
-      error: err as Error,
+      error: error_,
       positionError: 'initializationApp',
       additionalData: JSON.stringify(ctx.request),
     });
-    ctx.status = CODE_ERROR;
-    ctx.body = {
-      message: err,
-    };
+    if (error_ instanceof ShopifyRestError && error_.isAuthenticationError) {
+      ctx.status = CODE_ERROR;
+      ctx.body = {
+        message: error_.message,
+        isInvalidToken: true,
+      } as InitializationApp_ResponseError;
+    } else {
+      ctx.status = CODE_ERROR;
+      ctx.body = {
+        message: error_.message,
+        isInvalidToken: false,
+      } as InitializationApp_ResponseError;
+    }
   }
 };
 
@@ -55,17 +70,27 @@ export const createSettingsUseMetaFieldsAsDB: IMiddleware = async ctx => {
     ctx.body = {
       metafieldId: data.id,
       settings: JSON.parse(data.value) as Settings,
-    } as CreateSettings_Response;
-  } catch (err) {
+    } as CreateSettings_ResponseSuccess;
+  } catch (error) {
+    const error_ = error as Error;
     reportService.createReportError({
-      error: err as Error,
+      error: error_,
       positionError: 'createSettingsUseMetaFieldsAsDB',
       additionalData: JSON.stringify(ctx.request),
     });
-    ctx.status = CODE_ERROR;
-    ctx.body = {
-      message: err,
-    };
+    if (error_ instanceof ShopifyRestError && error_.isAuthenticationError) {
+      ctx.status = CODE_ERROR;
+      ctx.body = {
+        message: error_.message,
+        isInvalidToken: true,
+      } as CreateSettings_ResponseError;
+    } else {
+      ctx.status = CODE_ERROR;
+      ctx.body = {
+        message: error_.message,
+        isInvalidToken: false,
+      } as CreateSettings_ResponseError;
+    }
   }
 };
 
@@ -80,17 +105,27 @@ export const updateSettingsUseMetaFieldsAsDB: IMiddleware = async ctx => {
     ctx.body = {
       metafieldId: data.id,
       settings: JSON.parse(data.value) as Settings,
-    } as UpdateSettings_Response;
-  } catch (err) {
+    } as UpdateSettings_ResponseSuccess;
+  } catch (error) {
+    const error_ = error as Error;
     reportService.createReportError({
-      error: err as Error,
+      error: error_,
       positionError: 'updateSettingsUseMetaFieldsAsDB',
       additionalData: JSON.stringify(ctx.request),
     });
-    ctx.status = CODE_ERROR;
-    ctx.body = {
-      message: err,
-    };
+    if (error_ instanceof ShopifyRestError) {
+      ctx.status = CODE_ERROR;
+      ctx.body = {
+        message: error_.message,
+        isInvalidToken: true,
+      } as UpdateSettings_ResponseError;
+    } else {
+      ctx.status = CODE_ERROR;
+      ctx.body = {
+        message: error_.message,
+        isInvalidToken: false,
+      } as UpdateSettings_ResponseError;
+    }
   }
 };
 
@@ -106,16 +141,26 @@ export const getSettingsUseMetaFieldsAsDB: IMiddleware = async ctx => {
             settings: JSON.parse(data.value) as Settings,
           }
         : undefined,
-    } as GetSettings_Response;
-  } catch (err) {
+    } as GetSettings_ResponseSuccess;
+  } catch (error) {
+    const error_ = error as Error;
     reportService.createReportError({
-      error: err as Error,
+      error: error_,
       positionError: 'getSettingsUseMetaFieldsAsDB',
       additionalData: JSON.stringify(ctx.request),
     });
-    ctx.status = CODE_ERROR;
-    ctx.body = {
-      message: err,
-    };
+    if (error_ instanceof ShopifyRestError && error_.isAuthenticationError) {
+      ctx.status = CODE_ERROR;
+      ctx.body = {
+        message: error_.message,
+        isInvalidToken: true,
+      } as GetSettings_ResponseError;
+    } else {
+      ctx.status = CODE_ERROR;
+      ctx.body = {
+        message: error_.message,
+        isInvalidToken: false,
+      } as GetSettings_ResponseError;
+    }
   }
 };

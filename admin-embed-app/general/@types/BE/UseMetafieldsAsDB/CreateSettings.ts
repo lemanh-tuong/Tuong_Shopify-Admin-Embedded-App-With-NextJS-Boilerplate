@@ -4,9 +4,14 @@ export interface CreateSettings_ExpectBodyData {
   settings: Settings;
 }
 
-export interface CreateSettings_Response {
+export interface CreateSettings_ResponseSuccess {
   /** Trả lại settings sau lưu */
   settings: Settings;
   /** Trả lại id để phòng trường hợp api create metafield của shopify không còn tự động ghi đè giá trị cũ nữa mà phải dùng api update metafield  */
   metafieldId: number;
+}
+
+export interface CreateSettings_ResponseError {
+  message: string;
+  isInvalidToken: boolean;
 }

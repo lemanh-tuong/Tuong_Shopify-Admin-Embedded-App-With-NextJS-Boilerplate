@@ -1,6 +1,7 @@
 import { API_VERSION, APP_NAME } from 'server/env';
 import { reportService } from 'server/services/FirebaseSentryErrorService';
 import axios from 'axios';
+import { ShopifyRestError } from '../ShopifyRestError';
 
 export interface GetSettings {
   myshopifyDomain: string;
@@ -40,12 +41,13 @@ export const getSettings = async ({ accessToken, myshopifyDomain }: GetSettings)
       },
     });
     return res.data.metafields?.find(metafield => metafield.namespace === APP_NAME && metafield.key === 'settings');
-  } catch (err) {
+  } catch (error) {
+    const error_ = error as Error;
     reportService.createReportError({
-      error: err as Error,
+      error: error_,
       positionError: 'getSettings',
       additionalData: JSON.stringify({ accessToken, myshopifyDomain }),
     });
-    throw err;
+    throw new ShopifyRestError(error_);
   }
 };
