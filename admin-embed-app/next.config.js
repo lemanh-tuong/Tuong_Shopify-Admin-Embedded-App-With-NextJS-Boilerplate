@@ -5,9 +5,13 @@ const withImages = require('next-images');
 const withPlugins = require('next-compose-plugins');
 const apiKey = JSON.stringify(process.env.SHOPIFY_API_KEY);
 
+/**
+ * @type {import('next').NextConfig}
+ */
 module.exports = withPlugins([withTM, withImages], {
   typescript: {
     // Lỗi type: "Type error: 'PersistGate' cannot be used as a JSX component." không thể sửa -> ignore
+    // NOTE: Nếu deploy sử dụng yarn install thì có thể bỏ
     ignoreBuildErrors: true,
   },
   eslint: {

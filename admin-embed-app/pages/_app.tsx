@@ -10,7 +10,7 @@ import ApolloClient, { InMemoryCache, IntrospectionFragmentMatcher, Introspectio
 import App from 'next/app';
 import { ApolloProvider } from 'react-apollo';
 import { FC, useMemo } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { BrowserRouter, useHistory, useLocation } from 'react-router-dom';
 import adminSchema from './admin-schema.json';
 
 const cache = new InMemoryCache({
@@ -91,15 +91,17 @@ class MyApp extends App {
       return <></>;
     }
     return (
-      <PolarisProvider i18n={translations}>
-        <ShopifyAppBridgeProvider host={host}>
-          <I18nProvider>
-            <ReactApolloProvider Component={Component} {...pageProps}>
-              <Component {...pageProps} />
-            </ReactApolloProvider>
-          </I18nProvider>
-        </ShopifyAppBridgeProvider>
-      </PolarisProvider>
+      <BrowserRouter>
+        <PolarisProvider i18n={translations}>
+          <ShopifyAppBridgeProvider host={host}>
+            <I18nProvider>
+              <ReactApolloProvider Component={Component} {...pageProps}>
+                <Component {...pageProps} />
+              </ReactApolloProvider>
+            </I18nProvider>
+          </ShopifyAppBridgeProvider>
+        </PolarisProvider>
+      </BrowserRouter>
     );
   }
 }
