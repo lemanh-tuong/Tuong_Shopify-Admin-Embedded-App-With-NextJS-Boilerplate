@@ -7,7 +7,7 @@ import { nextApp } from './nextApp';
 import { API_VERSION, HOST, PORT, SCOPES, SHOPIFY_API_KEY, SHOPIFY_API_SECRET } from './env';
 import { handleOfflineAccessToken, handleOnlineAccessToken } from './middlewares';
 import { routes } from './routers';
-import { sessionStorage } from './sessionStorage';
+import { sessionStorage } from './storage/sessionStorage';
 
 Shopify.Context.initialize({
   API_KEY: SHOPIFY_API_KEY,

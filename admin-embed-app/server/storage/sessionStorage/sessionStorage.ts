@@ -2,9 +2,9 @@ import { promisify } from 'util';
 import { CustomSessionStorage } from '@shopify/shopify-api/dist/auth/session';
 import bluebird from 'bluebird';
 import redis from 'redis';
-import { REDIS_URL } from '../env';
-import { reportService } from '../services/FirebaseSentryErrorService';
-import { sessionStorageService } from '../services/NguyenDttnServices';
+import { REDIS_URL } from '../../env';
+import { reportService } from '../../services/FirebaseSentryErrorService';
+import { sessionStorageService } from '../../services/NguyenDttnServices';
 
 bluebird.promisifyAll(redis.RedisClient.prototype);
 
