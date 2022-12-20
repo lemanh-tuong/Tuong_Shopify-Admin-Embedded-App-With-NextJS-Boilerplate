@@ -3,6 +3,7 @@ import { createClient, getShopProperties } from 'server/graphql';
 import { reportService } from 'server/services/FirebaseSentryErrorService';
 import { registerService } from 'server/services/NguyenDttnServices/RegisterService';
 import { bulkService, pricingService, uninstallAppService } from 'server/services/NguyenDttnServices';
+import { refreshedSessionStorage } from 'server/storage/refreshedSessionStorage';
 import createShopifyAuth from '@shopify/koa-shopify-auth';
 import Shopify from '@shopify/shopify-api';
 
@@ -11,6 +12,7 @@ Shopify.Webhooks.Registry.addHandler('APP_UNINSTALLED', {
   path: '/webhooks',
   webhookHandler: async (topic, shop, body) => {
     try {
+      refreshedSessionStorage.delete(shop);
       await uninstallAppService.uninstallApp({ shopName: shop });
     } catch (err) {
       reportService.createReportError({
@@ -27,6 +29,7 @@ Shopify.Webhooks.Registry.addHandler('APP_SUBSCRIPTIONS_UPDATE', {
   path: '/webhooks',
   webhookHandler: async (topic, shop, body) => {
     try {
+      refreshedSessionStorage.delete(shop);
       const data = JSON.parse(body);
       await pricingService.updatePricing({ shopName: shop, body: data.app_subscription });
     } catch (err) {
