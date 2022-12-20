@@ -26,10 +26,8 @@ declare global {
 
   interface Window {
     __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-    $crisp: any;
-    CRISP_WEBSITE_ID: string;
     tidioChatApi?: any;
-    _APP_: any;
+    __SHOPIFY_DEV_HOST: string;
   }
 
   type App = ReturnType<typeof useAppBridge>;

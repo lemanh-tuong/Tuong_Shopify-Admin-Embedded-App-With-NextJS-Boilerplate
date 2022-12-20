@@ -1,7 +1,7 @@
 import { PathName } from 'src/routes/types';
 import * as H from 'history';
 import * as React from 'react';
-import { match } from 'react-router';
+import { match } from 'react-router-dom';
 import { GetState, LiteralUnion, LiteralUnionAndObject } from '../type';
 
 declare module 'react-router-dom' {
@@ -45,7 +45,7 @@ declare module 'react-router-dom' {
     useParams,
     useRouteMatch,
     withRouter,
-  } from 'react-router';
+  } from 'react-router-dom';
 
   export interface BrowserRouterProps {
     basename?: string;

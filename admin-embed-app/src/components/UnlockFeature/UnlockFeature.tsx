@@ -5,7 +5,7 @@ import { useTidioChat } from 'src/hooks/useTidioChat';
 import parse from 'html-react-parser';
 import { ReactNode } from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { ActivityIndicator, View } from 'wiloke-react-core';
 import * as styles from './styles';
 

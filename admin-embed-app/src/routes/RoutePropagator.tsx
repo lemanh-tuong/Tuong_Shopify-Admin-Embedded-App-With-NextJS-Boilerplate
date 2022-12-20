@@ -1,6 +1,6 @@
 import { RoutePropagator as AppBridgeRoutePropagator } from '@shopify/app-bridge-react';
 import React from 'react';
-import { useLocation, withRouter } from 'react-router';
+import { useLocation, withRouter } from 'react-router-dom';
 
 /** Component dùng để thay đổi url theo route react khi ở admin embed */
 function RoutePropagatorComponent() {

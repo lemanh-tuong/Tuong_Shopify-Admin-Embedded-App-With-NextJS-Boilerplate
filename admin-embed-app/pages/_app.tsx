@@ -1,14 +1,16 @@
 import { I18nProvider } from 'src/translation';
-import { Provider, useAppBridge } from '@shopify/app-bridge-react';
+import { Provider as AppBridgeProvider, ProviderProps as AppBridgeProviderProps, useAppBridge } from '@shopify/app-bridge-react';
 import { authenticatedFetch } from '@shopify/app-bridge-utils';
 import { Redirect } from '@shopify/app-bridge/actions';
-import { AppProvider } from '@shopify/polaris';
+import { AppProvider as PolarisProvider } from '@shopify/polaris';
 import '@shopify/polaris/dist/styles.css';
 import translations from '@shopify/polaris/locales/en.json';
 import 'antd/dist/antd.css';
 import ApolloClient, { InMemoryCache, IntrospectionFragmentMatcher, IntrospectionResultData } from 'apollo-boost';
 import App from 'next/app';
 import { ApolloProvider } from 'react-apollo';
+import { FC, useMemo } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 import adminSchema from './admin-schema.json';
 
 const cache = new InMemoryCache({
@@ -36,7 +38,7 @@ function userLoggedInFetch(app: Parameters<typeof authenticatedFetch>[0]) {
   };
 }
 
-function MyProvider(props: any) {
+const ReactApolloProvider: FC = ({ children }) => {
   const app = useAppBridge();
 
   const client = new ApolloClient({
@@ -47,41 +49,65 @@ function MyProvider(props: any) {
     },
   });
 
-  const { Component } = props;
+  return <ApolloProvider client={client}>{children}</ApolloProvider>;
+};
+
+const ShopifyAppBridgeProvider: FC<{ host?: string }> = ({ children, host }) => {
+  const location = useLocation();
+  const history = useHistory();
+
+  const router: AppBridgeProviderProps['router'] = useMemo(() => {
+    return {
+      location,
+      history: {
+        replace: history.replace,
+      },
+    };
+  }, [history, location]);
+
+  const config: AppBridgeProviderProps['config'] = useMemo(() => {
+    const host_ = new URLSearchParams(location.search).get('host') || host || window.__SHOPIFY_DEV_HOST;
+    window.__SHOPIFY_DEV_HOST = host_;
+    return {
+      host: host_,
+      forceRedirect: true,
+      // @ts-ignore
+      apiKey: API_KEY, // Dùng env để tránh lộ API key
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <ApolloProvider client={client}>
-      <Component {...props} />
-    </ApolloProvider>
+    <AppBridgeProvider config={config} router={router}>
+      {children}
+    </AppBridgeProvider>
   );
-}
+};
 
 class MyApp extends App {
   render() {
     const { Component, pageProps, host } = this.props as any;
+    if (typeof window === 'undefined') {
+      return <></>;
+    }
     return (
-      <AppProvider i18n={translations}>
-        <Provider
-          config={{
-            // @ts-ignore
-            apiKey: API_KEY,
-            host: host,
-            forceRedirect: true,
-          }}
-        >
+      <PolarisProvider i18n={translations}>
+        <ShopifyAppBridgeProvider host={host}>
           <I18nProvider>
-            <MyProvider Component={Component} {...pageProps} />
+            <ReactApolloProvider Component={Component} {...pageProps}>
+              <Component {...pageProps} />
+            </ReactApolloProvider>
           </I18nProvider>
-        </Provider>
-      </AppProvider>
+        </ShopifyAppBridgeProvider>
+      </PolarisProvider>
     );
   }
 }
 
-// @ts-ignore
 MyApp.getInitialProps = async ({ ctx }) => {
   return {
     host: ctx.query.host,
+    pageProps: {},
   };
 };
 

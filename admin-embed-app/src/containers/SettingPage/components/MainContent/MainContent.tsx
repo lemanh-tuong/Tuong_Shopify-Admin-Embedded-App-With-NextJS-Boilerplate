@@ -1,7 +1,7 @@
 import { Button } from 'src/components/Button';
 import { AppRecommendations } from 'src/containers/AppRecommendations/AppRecommendations';
 import { initializationSelector } from 'src/containers/selectors';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Text, View } from 'wiloke-react-core';
 import { Preview } from './Preview/Preview';

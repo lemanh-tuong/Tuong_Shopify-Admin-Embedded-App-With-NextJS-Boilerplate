@@ -8,7 +8,7 @@ import { SettingPage } from 'src/containers/SettingPage/SettingPage';
 import { useTidioChat } from 'src/hooks/useTidioChat';
 import { isBrowser } from 'src/utils/isBrowser';
 import { AccessToken } from 'src/containers/AccessToken/AccessToken';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { RoutePropagator } from './RoutePropagator';
@@ -64,12 +64,11 @@ export const Routes = () => {
   };
 
   return (
-    // @ts-ignore
-    <BrowserRouter>
+    <>
       <RoutePropagator />
       {_renderRoute()}
       {statusInitialization === 'success' && <XinRate />}
       {shopDomain && <AccessToken shopDomain={shopDomain} />}
-    </BrowserRouter>
+    </>
   );
 };
