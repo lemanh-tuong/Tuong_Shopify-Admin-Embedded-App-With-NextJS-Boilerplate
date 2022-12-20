@@ -5,21 +5,17 @@ interface NextClientEnv {
   NEXT_PUBLIC_TIDIO_REQUEST_FEATURES_MESSAGE: string; // Message khi muốn yêu cầu thêm tính năng mới
   NEXT_PUBLIC_TIDIO_UNLOCK_FEATURES_MESSAGE: string; // Message khi muốn unlock 1 feature - cái mà cần phải pricing để mở nếu trong thời gian không có người support
 
-  // @tuong -> @deprecated Access token được dùng ở component AccessToken
-  NEXT_PUBLIC_GET_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT: string;
-  NEXT_PUBLIC_CREATE_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT: string;
+  // API lấy offline token - nhằm đề phòng khi lấy offline token ở next server lỗi nhưng vẫn vào app - được dùng ở component AccessToken
+  NEXT_PUBLIC_API_GET_OFFLINE_TOKEN_IN_NEXT_CLIENT: string;
+  NEXT_PUBLIC_API_CREATE_OFFLINE_TOKEN_IN_NEXT_CLIENT: string;
 
-  // Pricing
-  NEXT_PUBLIC_API_PROMO_CODE_URL: string;
-  NEXT_PUBLIC_API_CHARGE_URL: string;
-  NEXT_PUBLIC_API_CURRENT_PLAN: string;
-  NEXT_PUBLIC_API_ALL_PLAN: string;
+  // FIXME: Pricing chưa lên được khung hoàn chỉnh
 
   // Tên của app
   NEXT_PUBLIC_APP_NAME: string;
 
-  // API base url
-  NEXT_PUBLIC_AXIOS_BASE_URL: string;
+  // Bản boilerplate chỉ có duy nhất 1 instance axios cho 1 service chính của đội BE
+  NEXT_PUBLIC_MAIN_SERVICE_ENDPOINT: string;
 
   // Link review app trên shopify store
   NEXT_PUBLIC_REVIEW_APP_URL: string;
@@ -28,15 +24,15 @@ interface NextClientEnv {
   NEXT_PUBLIC_FEEDBACK_MAIL: string;
 
   // Chức năng lock feature
-  NEXT_PUBLIC_ENABLE_CONTACT_US: string;
-  NEXT_PUBLIC_CONTACT_US_MESSAGE: string;
+  NEXT_PUBLIC_ENABLE_CONTACT_US_TO_UNLOCK_FEATURE: string; // Bật nếu có người trực và tắt nếu không có người trực
+  NEXT_PUBLIC_CONTACT_US_TO_UNLOCK_FEATURE_DESCRIPTION: string; // Hiển thị đoạn text để người dùng biết có thể chat để xin mở tính năng thay vì mất tiền nâng pricing
 
   // App Recommendations
   NEXT_PUBLIC_APP_RECOMMENDATIONS_URL: string;
 
   // Xin rate
-  NEXT_PUBLIC_GET_REVIEW_STATUS_API_URL: string;
-  NEXT_PUBLIC_SET_REVIEW_STATUS_API_URL: string;
+  NEXT_PUBLIC_API_GET_REVIEW_STATUS: string; // API check xem có hiển thị modal để xin review của người dùng hay không
+  NEXT_PUBLIC_API_SET_REVIEW_STATUS: string; //
 
   NEXT_PUBLIC_YOUTUBE_LINK: string;
 }
@@ -54,20 +50,16 @@ export const TIDIO_REQUEST_FEATURES_MESSAGE: string = nextClientEnv.NEXT_PUBLIC_
 export const TIDIO_UNLOCK_FEATURES_MESSAGE: string = nextClientEnv.NEXT_PUBLIC_TIDIO_UNLOCK_FEATURES_MESSAGE; // Message khi muốn unlock 1 feature - cái mà cần phải pricing để mở nếu trong thời gian không có người support
 
 // Lọt sàng xuống nia -> Nếu BE sai thì vẫn có thể dùng component "AccessToken" để xử lý offline token
-export const GET_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT: string = nextClientEnv.NEXT_PUBLIC_GET_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT;
-export const CREATE_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT: string = nextClientEnv.NEXT_PUBLIC_CREATE_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT;
+export const API_GET_OFFLINE_TOKEN_IN_NEXT_CLIENT: string = nextClientEnv.NEXT_PUBLIC_API_GET_OFFLINE_TOKEN_IN_NEXT_CLIENT;
+export const API_CREATE_OFFLINE_TOKEN_IN_NEXT_CLIENT: string = nextClientEnv.NEXT_PUBLIC_API_CREATE_OFFLINE_TOKEN_IN_NEXT_CLIENT;
 
-// Pricing
-export const API_PROMO_CODE_URL: string = nextClientEnv.NEXT_PUBLIC_API_PROMO_CODE_URL;
-export const API_CHARGE_URL: string = nextClientEnv.NEXT_PUBLIC_API_CHARGE_URL;
-export const API_CURRENT_PLAN: string = nextClientEnv.NEXT_PUBLIC_API_CURRENT_PLAN;
-export const API_ALL_PLAN: string = nextClientEnv.NEXT_PUBLIC_API_ALL_PLAN;
+// FIXME: Pricing chưa lên được khung hoàn chỉnh
 
 // Tên của app
 export const APP_NAME: string = nextClientEnv.NEXT_PUBLIC_APP_NAME;
 
-// API base url
-export const AXIOS_BASE_URL: string = nextClientEnv.NEXT_PUBLIC_AXIOS_BASE_URL;
+// Bản boilerplate chỉ có duy nhất 1 instance axios cho 1 service chính của đội BE
+export const MAIN_SERVICE_ENDPOINT: string = nextClientEnv.NEXT_PUBLIC_MAIN_SERVICE_ENDPOINT;
 
 // Link review app trên shopify store
 export const REVIEW_APP_URL: string = nextClientEnv.NEXT_PUBLIC_REVIEW_APP_URL;
@@ -76,21 +68,21 @@ export const REVIEW_APP_URL: string = nextClientEnv.NEXT_PUBLIC_REVIEW_APP_URL;
 export const FEEDBACK_MAIL: string = nextClientEnv.NEXT_PUBLIC_FEEDBACK_MAIL;
 
 // Chức năng lock feature
-let ENABLE_CONTACT_US = false;
+let ENABLE_CONTACT_US_TO_UNLOCK_FEATURE = false;
 try {
-  ENABLE_CONTACT_US = JSON.parse(nextClientEnv.NEXT_PUBLIC_ENABLE_CONTACT_US);
+  ENABLE_CONTACT_US_TO_UNLOCK_FEATURE = JSON.parse(nextClientEnv.NEXT_PUBLIC_ENABLE_CONTACT_US_TO_UNLOCK_FEATURE);
 } catch {
-  ENABLE_CONTACT_US = false;
+  ENABLE_CONTACT_US_TO_UNLOCK_FEATURE = false;
 }
-export { ENABLE_CONTACT_US };
+export { ENABLE_CONTACT_US_TO_UNLOCK_FEATURE };
 
-export const CONTACT_US_MESSAGE: string = nextClientEnv.NEXT_PUBLIC_CONTACT_US_MESSAGE;
+export const CONTACT_US_TO_UNLOCK_FEATURE_DESCRIPTION: string = nextClientEnv.NEXT_PUBLIC_CONTACT_US_TO_UNLOCK_FEATURE_DESCRIPTION;
 
 // App Recommendations
 export const APP_RECOMMENDATIONS_URL: string = nextClientEnv.NEXT_PUBLIC_APP_RECOMMENDATIONS_URL;
 
 // Xin rate
-export const GET_REVIEW_STATUS_API_URL: string = nextClientEnv.NEXT_PUBLIC_GET_REVIEW_STATUS_API_URL;
-export const SET_REVIEW_STATUS_API_URL: string = nextClientEnv.NEXT_PUBLIC_SET_REVIEW_STATUS_API_URL;
+export const API_GET_REVIEW_STATUS: string = nextClientEnv.NEXT_PUBLIC_API_GET_REVIEW_STATUS;
+export const API_SET_REVIEW_STATUS: string = nextClientEnv.NEXT_PUBLIC_API_SET_REVIEW_STATUS;
 
 export const YOUTUBE_LINK: string = nextClientEnv.NEXT_PUBLIC_YOUTUBE_LINK;

@@ -1,5 +1,4 @@
-import 'isomorphic-fetch';
-import { ApolloClient, gql } from 'apollo-boost';
+import { gql, GraphQLClient } from 'graphql-request';
 
 interface ProductSrcImageUpdateVariables {
   productId: string;
@@ -40,10 +39,7 @@ const PRODUCT_SRC_IMAGE_UPDATE = gql`
 `;
 
 /** File này chỉ là demo về cách viết graphql tại file server. Không liên quan gì đến chức năng trong app boilerplate */
-export const productSrcImageUpdate = async ({ client, variables }: { client: ApolloClient<any>; variables: ProductSrcImageUpdateVariables }) => {
-  const res = await client.mutate<ProductSrcImageResponse, ProductSrcImageUpdateVariables>({
-    mutation: PRODUCT_SRC_IMAGE_UPDATE,
-    variables,
-  });
+export const productSrcImageUpdate = async ({ client, variables }: { client: GraphQLClient; variables: ProductSrcImageUpdateVariables }) => {
+  const res = await client.request<ProductSrcImageResponse, ProductSrcImageUpdateVariables>(PRODUCT_SRC_IMAGE_UPDATE, variables);
   return res;
 };

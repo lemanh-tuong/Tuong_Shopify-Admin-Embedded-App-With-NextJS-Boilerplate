@@ -1,22 +1,22 @@
 import { Button } from 'src/components/Button';
-import { Navigation, NavigationProps } from 'src/components/Navigation';
+import { initializationSelector } from 'src/store/selectors';
 import { useSelector } from 'react-redux';
 import { v4 } from 'uuid';
 import { View } from 'wiloke-react-core';
-import { initializationSelector } from '../selectors';
+import { Navigation, NavigationProps } from './Navigation';
 import * as styles from './styles';
 
 const navItems: NavigationProps['data'] = [
   {
     label: 'Home',
-    href: '/',
+    href: '/settings',
     id: v4(),
     isReactRouter: true,
     exact: true,
   },
   {
     label: 'Advanced',
-    href: '/advanced',
+    href: '/settings/advanced',
     id: v4(),
     isReactRouter: true,
     exact: true,
@@ -37,6 +37,7 @@ const navItems: NavigationProps['data'] = [
   },
 ];
 
+// TODO: I18n
 export const Header = () => {
   const { shopDomain } = useSelector(initializationSelector);
 

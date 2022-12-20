@@ -1,4 +1,4 @@
-import { i18n, translation } from 'src/translation';
+import { i18n, translation } from 'src/providers/I18nProvider';
 
 type TranslationName = keyof typeof translation.en;
 

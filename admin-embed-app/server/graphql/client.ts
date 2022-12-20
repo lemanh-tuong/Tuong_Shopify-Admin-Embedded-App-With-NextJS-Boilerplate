@@ -1,4 +1,4 @@
-import ApolloClient from 'apollo-boost';
+import { GraphQLClient } from 'graphql-request';
 
 interface CreateClient {
   /** Domain của shop */
@@ -10,15 +10,10 @@ interface CreateClient {
 }
 
 export const createClient = ({ shopDomain, accessToken, apiVersion }: CreateClient) => {
-  return new ApolloClient({
-    uri: `https://${shopDomain}/admin/api/${apiVersion}/graphql.json`,
-    request: operation => {
-      operation.setContext({
-        headers: {
-          'X-Shopify-Access-Token': accessToken,
-          'User-Agent': `shopify-app-node ${process.env.npm_package_version} | Shopify App CLI`,
-        },
-      });
+  return new GraphQLClient(`https://${shopDomain}/admin/api/${apiVersion}/graphql.json`, {
+    headers: {
+      'X-Shopify-Access-Token': accessToken,
+      'User-Agent': `shopify-app-node ${process.env.npm_package_version} | Shopify App CLI`,
     },
   });
 };

@@ -1,5 +1,4 @@
-import { ApolloClient, gql } from 'apollo-boost';
-import 'isomorphic-fetch';
+import { gql, GraphQLClient } from 'graphql-request';
 
 interface ProductsNode {
   cursor: string;
@@ -42,10 +41,7 @@ const GET_PRODUCTS = gql`
 `;
 
 /** File này chỉ là demo về cách viết graphql tại file server. Không liên quan gì đến chức năng trong app boilerplate */
-export const getProducts = async ({ client, variables }: { client: ApolloClient<any>; variables: ProductsVars }) => {
-  const res = await client.query<ProductsInterface>({
-    query: GET_PRODUCTS,
-    variables,
-  });
+export const getProducts = async ({ client, variables }: { client: GraphQLClient; variables: ProductsVars }) => {
+  const res = await client.request<ProductsInterface>(GET_PRODUCTS, variables);
   return res;
 };

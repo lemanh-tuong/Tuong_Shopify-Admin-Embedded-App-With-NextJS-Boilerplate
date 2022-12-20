@@ -1,10 +1,6 @@
-import { ComponentType } from 'react';
-import { LocationStates } from './LocationStates';
-
-export type PathName = keyof LocationStates;
+import { ReactNode } from 'react';
 
 export interface Page {
-  path: PathName;
-  exact?: boolean;
-  component: ComponentType;
+  path: string;
+  component: ReactNode | null;
 }

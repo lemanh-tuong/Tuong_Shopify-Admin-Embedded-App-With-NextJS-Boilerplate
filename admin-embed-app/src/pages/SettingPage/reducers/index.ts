@@ -1,0 +1,1 @@
+export { reducerSetting } from './reducerSetting';

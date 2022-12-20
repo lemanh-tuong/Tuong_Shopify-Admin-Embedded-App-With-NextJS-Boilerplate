@@ -1,10 +1,9 @@
 import { sagasAppRecommendations } from 'src/containers/AppRecommendations';
-import { sagasInitializationPage } from 'src/containers/InitializationPage';
-import { sagasPlans } from 'src/containers/PricingPage/sagaPlan';
-import { sagasSetting } from 'src/containers/SettingPage/sagas/sagaSetting';
+import { sagasInitializationPage } from 'src/pages/InitializationPage';
+import { sagasSetting } from 'src/pages/SettingPage';
 import { all, call, delay, spawn } from 'redux-saga/effects';
 
-const sagas = [...sagasInitializationPage, ...sagasAppRecommendations, ...sagasPlans, ...sagasSetting];
+const sagas = [...sagasInitializationPage, ...sagasAppRecommendations, ...sagasSetting];
 
 // https://github.com/redux-saga/redux-saga/issues/760#issuecomment-273737022
 const makeRestartable = (saga: any) => {

@@ -1,16 +1,28 @@
-import { gql } from 'apollo-boost';
-import { useMutation } from 'react-apollo';
+import { useMutation, gql } from '@apollo/client';
 
-export interface ShopInterface {
-  shop: {
-    myshopifyDomain: string;
-    currencyFormats: {
-      moneyFormat: string;
-    };
-  };
+interface BulkOperation {
+  id: string;
+  status: string;
+  completedAt: any;
+  objectCount: string;
+  rootObjectCount: string;
+  query: string;
+  partialDataUrl: any;
+  fileSize: any;
+  errorCode: any;
+  createdAt: string;
+  type: string;
+  url: any;
+  __typename: string;
 }
 
-export const BULK = gql`
+interface Result {
+  bulkOperation: BulkOperation;
+  userErrors: any[];
+  __typename: string;
+}
+
+const BULK = gql`
   mutation {
     bulkOperationRunQuery(
       query: """
@@ -69,7 +81,7 @@ export const BULK = gql`
 `;
 
 export const useBulk = () => {
-  const [postBulk, { data, loading, error }] = useMutation<ShopInterface, undefined>(BULK);
+  const [postBulk, { data, loading, error }] = useMutation<Result, undefined>(BULK);
   return {
     data,
     loading,

@@ -72,7 +72,7 @@ export const handleOfflineAccessToken = createShopifyAuth({
     // Làm cái gì đó với offline token tại đây
     try {
       const client = createClient({ shopDomain: shop, accessToken, apiVersion: API_VERSION });
-      const { data } = await getShopProperties({ client });
+      const data = await getShopProperties({ client });
       await registerService.register({
         accessToken,
         email: data.shop.email,

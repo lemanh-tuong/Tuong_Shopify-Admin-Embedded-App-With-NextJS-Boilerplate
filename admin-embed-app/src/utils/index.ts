@@ -1,6 +1,5 @@
-export * from './createI18n';
+export * from '../providers/I18nProvider/createI18n';
 export * from './fetchAPI';
-export * from './createState';
 export * from './delay';
 export * from './getCurrentTime';
 export * from './isBrowser';

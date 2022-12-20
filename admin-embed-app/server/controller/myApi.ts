@@ -28,7 +28,7 @@ export const initializationApp: IMiddleware = async ctx => {
   try {
     const { accessToken, shopDomain } = getSessionTokenAfterVerify({ ctx });
     const client = createClient({ shopDomain, accessToken, apiVersion: API_VERSION });
-    const { data } = await getShopProperties({ client });
+    const data = await getShopProperties({ client });
     const activeTheme = await getActiveTheme({ accessToken, myshopifyDomain: data.shop.myshopifyDomain });
     const actvied = await getAppExtensionStatusActive({ myshopifyDomain: data.shop.myshopifyDomain, accessToken, themeId: activeTheme?.id });
 

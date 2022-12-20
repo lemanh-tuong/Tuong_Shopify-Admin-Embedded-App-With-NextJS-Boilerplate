@@ -1,11 +1,11 @@
-import { APP_NAME, CREATE_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT, GET_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT } from 'src/env';
+import { APP_NAME, API_CREATE_OFFLINE_TOKEN_IN_NEXT_CLIENT, API_GET_OFFLINE_TOKEN_IN_NEXT_CLIENT } from 'src/env';
 import { fetchAPI } from 'src/utils';
 import { Retry } from 'src/components/Retry/Retry';
+import { initializationSelector } from 'src/store/selectors';
 import { AxiosResponse } from 'axios';
 import { FC, useEffect, useState } from 'react';
 import { Text, View } from 'wiloke-react-core';
 import { useSelector } from 'react-redux';
-import { initializationSelector } from '../selectors';
 import * as styles from './styles';
 
 interface AccessTokenProps {
@@ -23,6 +23,7 @@ interface State {
   isUpdatedOfflineToken: boolean;
 }
 
+// TODO: I18n
 export const AccessToken: FC<AccessTokenProps> = ({ shopDomain }) => {
   const { isInvalidToken } = useSelector(initializationSelector);
 
@@ -35,7 +36,7 @@ export const AccessToken: FC<AccessTokenProps> = ({ shopDomain }) => {
     setState(state => ({ ...state, status: 'loading' }));
     try {
       const res: AxiosResponse<Response> = await fetchAPI.request({
-        url: GET_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT,
+        url: API_GET_OFFLINE_TOKEN_IN_NEXT_CLIENT,
         baseURL: '',
       });
       setState(state => ({
@@ -52,7 +53,7 @@ export const AccessToken: FC<AccessTokenProps> = ({ shopDomain }) => {
   };
 
   useEffect(() => {
-    if (GET_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT && (state.status === 'idle' || state.status === 'failure')) {
+    if (API_GET_OFFLINE_TOKEN_IN_NEXT_CLIENT && (state.status === 'idle' || state.status === 'failure')) {
       getAccessToken();
     }
   }, [state.status]);
@@ -64,7 +65,7 @@ export const AccessToken: FC<AccessTokenProps> = ({ shopDomain }) => {
           <Text css={styles.title}>Something went wrong</Text>
           <Retry
             onClick={() => {
-              window.open(`${CREATE_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT}/?shop=${shopDomain}&route=shop-installation`);
+              window.open(`${API_CREATE_OFFLINE_TOKEN_IN_NEXT_CLIENT}/?shop=${shopDomain}&route=shop-installation`);
             }}
           />
         </View>
@@ -82,7 +83,7 @@ export const AccessToken: FC<AccessTokenProps> = ({ shopDomain }) => {
             target="_blank"
             colorHover="light"
             css={styles.button}
-            href={`${CREATE_OFFLINE_ACCESS_TOKEN_API_URL_IN_COMPONENT}/?shop=${shopDomain}&route=shop-installation`}
+            href={`${API_CREATE_OFFLINE_TOKEN_IN_NEXT_CLIENT}/?shop=${shopDomain}&route=shop-installation`}
           >
             Click to complete
           </View>

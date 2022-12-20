@@ -1,7 +1,6 @@
-import { ApolloClient, gql } from 'apollo-boost';
-import 'isomorphic-fetch';
+import { gql, GraphQLClient } from 'graphql-request';
 
-interface GetShopProperties {
+interface Response {
   shop: {
     email: string;
     myshopifyDomain: string;
@@ -18,9 +17,7 @@ const GET_SHOP_PROPERTIES = gql`
 `;
 
 /** Định nghĩa khung graphql để lấy về các properties của shop qua shopify graphql */
-export const getShopProperties = async ({ client }: { client: ApolloClient<any> }) => {
-  const res = await client.query<GetShopProperties>({
-    query: GET_SHOP_PROPERTIES,
-  });
+export const getShopProperties = async ({ client }: { client: GraphQLClient }) => {
+  const res = await client.request<Response>(GET_SHOP_PROPERTIES);
   return res;
 };

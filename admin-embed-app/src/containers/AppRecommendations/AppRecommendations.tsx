@@ -1,5 +1,5 @@
 import { Carousel } from 'src/components/Carousel';
-import { appRecommendationsSelector } from 'src/containers/selectors';
+import { appRecommendationsSelector } from 'src/store/selectors';
 import { FC, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Text, View } from 'wiloke-react-core';
@@ -11,6 +11,7 @@ interface AppRecommendationsProps {
   showDescription?: boolean;
 }
 
+// TODO: I18n
 export const AppRecommendations: FC<AppRecommendationsProps> = ({ showDescription }) => {
   const { data, statusRequest } = useSelector(appRecommendationsSelector);
   const getAppRecommendations = useGetAppRecommendations();

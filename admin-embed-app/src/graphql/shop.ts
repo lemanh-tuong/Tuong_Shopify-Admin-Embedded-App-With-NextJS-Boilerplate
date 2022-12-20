@@ -1,14 +1,13 @@
-import { gql } from 'apollo-boost';
-import { useLazyQuery } from 'react-apollo';
+import { useLazyQuery, gql } from '@apollo/client';
 
-export interface ShopInterface {
+interface Result {
   shop: {
     myshopifyDomain: string;
     email: string;
   };
 }
 
-export const GET_SHOP_NAME = gql`
+const GET_SHOP_NAME = gql`
   query getShopName {
     shop {
       myshopifyDomain
@@ -18,7 +17,7 @@ export const GET_SHOP_NAME = gql`
 `;
 
 export const useGetShop = () => {
-  const [getShop, { data, loading, error }] = useLazyQuery<ShopInterface, undefined>(GET_SHOP_NAME);
+  const [getShop, { data, loading, error }] = useLazyQuery<Result, undefined>(GET_SHOP_NAME);
   return {
     data,
     loading,

@@ -1,37 +1,38 @@
+import { XinRate } from 'src/containers/XinRate';
+import { AccessToken } from 'src/containers/AccessToken';
+import { FAQsPage } from 'src/pages/FAQsPage/FAQsPage';
+import { initializationSelector } from 'src/store/selectors';
 import { TIDIO_HELLO_MESSAGE } from 'src/env';
-import { XinRate } from 'src/components/XinRate/XinRate';
-import { FAQsPage } from 'src/containers/FAQsPage/FAQsPage';
-import { InitializationPage } from 'src/containers/InitializationPage';
-import { PricingPage } from 'src/containers/PricingPage/PricingPage';
-import { initializationSelector } from 'src/containers/selectors';
-import { SettingPage } from 'src/containers/SettingPage/SettingPage';
 import { useTidioChat } from 'src/hooks/useTidioChat';
 import { isBrowser } from 'src/utils/isBrowser';
-import { AccessToken } from 'src/containers/AccessToken/AccessToken';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { SettingPage } from 'src/pages/SettingPage/SettingPage';
+import { PricingPage } from 'src/pages/PricingPage';
+import { InitializationPage } from 'src/pages/InitializationPage';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { RoutePropagator } from './RoutePropagator';
 import { Page } from './types';
 
 export const pages: Page[] = [
   {
     path: '/faqs',
-    exact: true,
-    component: FAQsPage,
+    component: <FAQsPage />,
   },
   {
     path: '/pricing',
-    exact: true,
-    component: PricingPage,
+    component: <PricingPage />,
+  },
+  {
+    path: '/settings/*',
+    component: <SettingPage />,
   },
   {
     path: '/',
-    component: SettingPage,
+    component: <Navigate to="/settings" replace={true} />,
   },
 ];
 
-export const Routes = () => {
+export const AppRoutes = () => {
   const { statusInitialization, shopDomain, email } = useSelector(initializationSelector);
   const { initTidioChat, openWithEmail, statusInitialization: statusInitializationTidio } = useTidioChat();
 
@@ -54,22 +55,19 @@ export const Routes = () => {
       return <InitializationPage />;
     }
     return (
-      <Switch>
-        {pages.map(({ component, path, exact }) => {
-          // @ts-ignore
-          return <Route key={path} component={component} exact={exact} path={path} />;
+      <Routes>
+        {pages.map(({ component, path }) => {
+          return <Route key={path} element={component} path={path} />;
         })}
-      </Switch>
+      </Routes>
     );
   };
 
   return (
-    // @ts-ignore
-    <BrowserRouter>
-      <RoutePropagator />
+    <>
       {_renderRoute()}
       {statusInitialization === 'success' && <XinRate />}
       {shopDomain && <AccessToken shopDomain={shopDomain} />}
-    </BrowserRouter>
+    </>
   );
 };

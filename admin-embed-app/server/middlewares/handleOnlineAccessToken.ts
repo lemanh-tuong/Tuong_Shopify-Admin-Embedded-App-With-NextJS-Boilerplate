@@ -1,3 +1,4 @@
+import { refreshedSession } from 'server/storage/refreshedSessionStorage';
 import createShopifyAuth from '@shopify/koa-shopify-auth';
 
 /** middleware xử lí online access token - tiền xử lí khi vào app */
@@ -8,6 +9,7 @@ export const handleOnlineAccessToken = createShopifyAuth({
 
     // Làm cái gì đó với online token tại đây
     console.log('handleOnlineAccessToken', shop, accessToken);
+    refreshedSession.set(shop, accessToken);
 
     // Redirect to app with shop parameter upon auth
     ctx.redirect(`/?shop=${shop}&host=${host}`);

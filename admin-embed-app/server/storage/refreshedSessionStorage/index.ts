@@ -1,0 +1,1 @@
+export const refreshedSession = new Map<string, boolean>(); // Fix lỗi khi build lại ===> "offlineToken" đã được lưu lại -> Không redirect đến "/install/auth/" -> Không redirect đến "/auth" -> Khi đó hàm "loadCurrentSession" của shopify sẽ luôn trả về undefined ----> Dùng biến này như 1 bản vá tạm thời

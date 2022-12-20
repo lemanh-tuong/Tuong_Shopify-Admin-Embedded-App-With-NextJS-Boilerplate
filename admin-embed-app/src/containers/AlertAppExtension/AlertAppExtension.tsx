@@ -3,8 +3,9 @@ import { Alert } from 'src/components/Alert';
 import { Button } from 'src/components/Button';
 import { useSelector } from 'react-redux';
 import { View } from 'wiloke-react-core';
-import { initializationSelector } from '../selectors';
+import { initializationSelector } from '../../store/selectors';
 
+// TODO: I18n
 export const AlertAppExtension = () => {
   const { appExtensionActived, themeId, shopDomain, statusInitialization } = useSelector(initializationSelector);
   const shopify_pagebuilder = `https://${shopDomain}/admin/themes/${themeId}/editor?context=apps`;
