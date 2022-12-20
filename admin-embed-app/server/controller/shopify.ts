@@ -67,8 +67,9 @@ export const startApp: IMiddleware = async (ctx, next) => {
       } else {
         await handleRequest(ctx, next);
       }
+    } else {
+      await handleRequest(ctx, next);
     }
-    await handleRequest(ctx, next);
   } catch (err) {
     reportService.createReportError({
       error: err as Error,
